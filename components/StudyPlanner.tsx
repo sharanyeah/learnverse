@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Concept, ScheduleItem } from '../types';
-import { generateStudySchedule } from '../services/geminiService';
+import { generateStudySchedule } from '../services/aiService';
 
 interface StudyPlannerProps {
   subject: string;

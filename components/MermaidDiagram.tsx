@@ -49,7 +49,7 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart }) => {
         // @ts-ignore
         window.mermaid.render('mermaid-svg-' + Math.random().toString(36).substr(2, 9), finalChart).then(({ svg }) => {
           if (ref.current) ref.current.innerHTML = svg;
-        }).catch(err => {
+        }).catch((err: any) => {
           console.error("Mermaid Render Error", err);
           if (ref.current) ref.current.innerHTML = `
             <div class="flex flex-col items-center justify-center p-10 bg-slate-50 rounded-3xl border border-dashed border-slate-200">

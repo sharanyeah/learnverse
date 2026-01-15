@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { PracticeQuestion, CourseSection } from '../types';
-import { generateMoreQuestions } from '../services/geminiService';
+import { generateMoreQuestions } from '../services/aiService';
 
 interface PracticeQuestionsProps {
   questions: PracticeQuestion[];

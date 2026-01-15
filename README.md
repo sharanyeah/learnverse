@@ -9,25 +9,40 @@ DeepTutor is built as a **Single Page Application (SPA)** using React 19 and Vit
 
 ### Tech Stack
 - **Framework**: React 19 (Strict Mode)
-- **AI Engine**: `@google/genai` (SDK 1.35.0+) - *Configured for Interoperability*
+- **AI Providers**: OpenAI (GPT-4o) or Google Gemini (2.0 Flash/Thinking) - *User Selectable*
 - **State Management**: Zustand (with Persistence)
 - **Data Layer**: TanStack Query (React Query V5)
 - **Visuals**: Mermaid.js (Logic Maps), Recharts (Mastery Radar)
 - **Math**: KaTeX + React Markdown (LaTeX Support)
 
-## 2. Model-Agnostic Design (Interoperable AI Protocol)
+## 2. Getting Started
 
-DeepTutor is designed to be provider-independent. Whether running on Google Gemini, OpenAI GPT, or Anthropic Claude, the system enforces a strict **Socratic Tutoring Protocol**:
+### API Configuration
+
+When you first open DeepTutor, you'll be prompted to configure your AI provider:
+
+1. **Choose Provider**: Select between OpenAI or Gemini
+2. **Enter API Key**:
+   - **OpenAI**: Get your key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+   - **Gemini**: Get your key from [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+3. **Save**: Your configuration is stored locally in your browser
+
+You can change providers at any time using the settings icon.
+
+## 3. Model-Agnostic Design (Interoperable AI Protocol)
+
+DeepTutor is designed to be provider-independent. Whether running on OpenAI GPT or Google Gemini, the system enforces a strict **Socratic Tutoring Protocol**:
 
 - **Persona Neutrality**: The model never identifies its underlying architecture or developer. It acts exclusively as "DeepTutor".
-- **Structured IO**: All auxiliary logic (Skeletonization, Quizzes, Flashcards) is governed by OpenAPI-compliant JSON schemas, ensuring that any high-parameter model produces identical data structures.
-- **Socratic Logic**: The system instruction forbids direct answer delivery. Instead, it mandates scaffolding and hint-based guidance, creating a consistent user experience regardless of the model provider.
+- **Structured IO**: All auxiliary logic (Skeletonization, Quizzes, Flashcards) uses consistent JSON schemas, ensuring uniform output regardless of provider.
+- **Socratic Logic**: The system instruction forbids direct answer delivery. Instead, it mandates scaffolding and hint-based guidance, creating a consistent user experience.
 
-## 3. Core Modules
+## 4. Core Modules
 
 ### AI Service (`services/aiService.ts`)
-The intelligence layer uses a dual-model strategy:
-- **Base Model (Efficiency)**: Handles "Skeletonization" and "Enrichment". Optimized for high-throughput JSON output.
+The intelligence layer uses a provider-agnostic design:
+- **OpenAI Mode**: Uses GPT-4o for all tasks including vision, chat, and content generation
+- **Gemini Mode**: Uses Gemini 2.0 Flash for content generation and Thinking models for tutoring
 - **Advanced Model (Reasoning)**: Powers the **Socratic Tutor** chat. Uses deep reasoning (Thinking Budgets) to provide conceptual bridges and derivations.
 
 ### Global Store (`store.ts`)
@@ -41,21 +56,27 @@ State is managed via **Zustand**. All student data (workspaces, chat history, fl
 - **Exam Room**: Diagnostic probes that detect "Logical Divergence" and move incorrect answers into a review queue.
 - **Academic Strategy**: Knowledge Radar charts mapping multi-unit mastery levels.
 
-## 5. Deployment Guide (Render)
+## 5. Deployment Guide
 
-### Prerequisites
-- A valid API Key for the configured provider.
-- A GitHub repository containing this project.
+DeepTutor runs entirely in the browser with no backend required. API keys are stored locally in browser storage and sent directly to OpenAI or Gemini from the client.
 
-### Step-by-Step Deployment
-1. **Create Site**: On Render, click "New" -> "Static Site".
-2. **Connect Repo**: Select your DeepTutor repository.
-3. **Build Settings**:
-   - **Build Command**: `npm install && npm run build`
-   - **Publish Directory**: `dist`
-4. **Environment Variables**:
-   - Add `API_KEY` and paste your key.
-5. **Deploy**: Render will build and serve your site.
+### Deployment Options
+
+#### Static Hosting (Recommended)
+Deploy to any static hosting service:
+- **Netlify**: Drag and drop the `dist` folder
+- **Vercel**: Import from GitHub and set build command to `npm run build`
+- **GitHub Pages**: Push the `dist` folder to a gh-pages branch
+- **Render**:
+  1. Create new "Static Site"
+  2. Build Command: `npm install && npm run build`
+  3. Publish Directory: `dist`
+
+### Local Development
+```bash
+npm install
+npm run dev
+```
 
 ## 6. Security & Safety
 - **Context Grounding**: DeepTutor follows a strict "Context-First" rule. It is instructed to prioritize retrieved document chunks over general knowledge.

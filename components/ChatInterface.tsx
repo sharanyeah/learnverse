@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { Message, Concept } from '../types';
-import { chatWithTutor } from '../services/geminiService';
+import { chatWithTutor } from '../services/aiService';
 
 interface ChatInterfaceProps {
   activeConcept: Concept;
